@@ -1,2 +1,2 @@
-bubble
+merge
 3,5,1,8,2

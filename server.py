@@ -1,11 +1,13 @@
 import socket
 
+host = 'localhost'
+port = 8000
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 # Bind the socket to a specific IP address and port
-s.bind(('127.0.0.1', 8000))
+s.bind((host, port))
 s.listen(1)
-print('server created and listining.. at 8000')
+print(f'Server created and listening at {port}')
 
 def handle_connection(connection):
     data = connection.recv(1024)
@@ -31,21 +33,21 @@ def send_to_sorting_server(sorting_type, array):
     s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print('sorting type:',sorting_type)
     if sorting_type == 'bubble':
-       s1.connect(('127.0.0.1', 8001))
-       print('Connected to bubble sort server')
-       s1.send(bytes(array))
-       sorted_array = s1.recv(1024)
-       return sorted_array
+        s1.connect(('127.0.0.1', 8001))
+        print('Connected to bubble sort server')
+        s1.send(bytes(array))
+        sorted_array = s1.recv(1024)
+        return sorted_array
     elif sorting_type == 'selection':
         s1.connect(('127.0.0.1', 8002))
         print('Connected to selection sort server')
-        s1.sendall(sorting_type.encode() + b'\n' + bytes(array))
+        s1.send(bytes(array))
         sorted_array = s1.recv(1024)
         return sorted_array
     elif sorting_type == 'merge':
         s1.connect(('127.0.0.1', 8003))
         print('Connected to merge sort server')
-        s1.sendall(sorting_type.encode() + b'\n' + bytes(array))
+        s1.send(bytes(array))
         sorted_array = s1.recv(1024)
         return sorted_array
     else:
