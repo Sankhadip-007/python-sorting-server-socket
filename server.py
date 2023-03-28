@@ -50,6 +50,12 @@ def send_to_sorting_server(sorting_type, array):
         s1.send(bytes(array))
         sorted_array = s1.recv(1024)
         return sorted_array
+    elif sorting_type == 'quick':
+        s1.connect(('127.0.0.1', 8004))
+        print('Connected to quick sort server')
+        s1.send(bytes(array))
+        sorted_array = s1.recv(1024)
+        return sorted_array
     else:
         print('Invalid alogorithm')
     # Close the connection to the sorting server

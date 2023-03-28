@@ -7,46 +7,8 @@ m.bind(('127.0.0.1', 8003))
 print('Merge sort server created...')
 # Listen for incoming connections
 m.listen(1)
-"""
-def merge_sort(arr):
-    if len(arr) > 1:
-        mid = len(arr)//2
-        left_half = arr[:mid]
-        right_half = arr[mid:]
-        merge_sort(left_half)
-        merge_sort(right_half)
-        return merge(left_half, right_half)
-    else:
-        return arr
 
-def merge(left, right):
-    i = j = k = 0
-    merged = []
-    while i<len(left) and j<len(right):
-        if left[i] < right[j]:
-            merged[k] = left[i]
-            i += 1
-            k += 1
-        elif left[i] > right[j]:
-            merged[k] = right[j]
-            j += 1
-            k += 1
-        else:
-            merged[k] = left[i]
-            i += 1
-            j += 1
-            k += 1
-    while i < len(left):
-        merged[k] = left[i]
-        k += 1
-        i += 1
-    while j < len(right):
-        merged[k] = right[j]
-        k += 1
-        j += 1
-    return merged
 """
-
 def merge_sort(arr):
     if len(arr) <= 1:
         return arr
@@ -75,7 +37,31 @@ def merge_sort(arr):
     merged += left_sorted[i:]
     merged += right_sorted[j:]
     return merged
+"""
 
+def merge(left, right):
+    merged = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+    merged += left[i:]
+    merged += right[j:]
+    return merged
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = arr[:mid]
+    right = arr[mid:]
+    left_sorted = merge_sort(left)
+    right_sorted = merge_sort(right)
+    return merge(left_sorted, right_sorted)
 
 # Define a function to handle incoming connections
 def handle_connection(connection):
