@@ -9,7 +9,9 @@ with open('input.txt', 'rb') as f:
 
 # Receive the sorted array txt from the central server
 l = c.recv(1024)
-with open('output.txt', 'wb') as f:
+filename=input('Enter file name for output: ')
+filename+='.txt'
+with open(filename, 'wb') as f:
     while l:
         f.write(l)
         l = c.recv(1024)
