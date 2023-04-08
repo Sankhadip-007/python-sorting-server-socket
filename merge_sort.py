@@ -3,41 +3,10 @@ import socket
 m = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 m.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 # Bind the socket to a specific IP address and port
-m.bind(('127.0.0.1', 8003))
+m.bind(('localhost', 8003))
 print('Merge sort server created...')
 # Listen for incoming connections
 m.listen(1)
-
-"""
-def merge_sort(arr):
-    if len(arr) <= 1:
-        return arr
-    # divide the array into two halves
-    mid = len(arr) // 2
-    left = arr[:mid]
-    right = arr[mid:]
-    # sort each half recursively
-    left_sorted = merge_sort(left)
-    right_sorted = merge_sort(right)
-    # merge the sorted halves
-    merged = []
-    i = j = 0
-    while i < len(left_sorted) and j < len(right_sorted):
-        if left_sorted[i] < right_sorted[j]:
-            merged.append(left_sorted[i])
-            i += 1
-        elif left_sorted[i] > right_sorted[j]:
-            merged.append(right_sorted[j])
-            j += 1
-        else:
-            merged.append(left_sorted[i])
-            i += 1
-            j += 1 
-    # append any remaining elements
-    merged += left_sorted[i:]
-    merged += right_sorted[j:]
-    return merged
-"""
 
 def merge(left, right):
     merged = []
