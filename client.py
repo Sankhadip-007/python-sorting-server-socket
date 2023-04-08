@@ -12,11 +12,22 @@ with open('input.txt', 'w+') as f:
     f.write(arr)
 
 # Read the sorting type and array from a text file
-with open('input.txt', 'rb') as f:
-    sorting_data = f.read()
-    c.sendall(sorting_data)
+# with open('input.txt', 'rb') as f:
+#     sorting_data = f.read()
+#     c.sendall(sorting_data)
+arr=input('Enter array values: ')
+sorting_type=input('Enter sorting type(merge/quick/bubble): ')
+with open('input.txt', 'w+') as f:
+     f.write(sorting_type)
+     f.write('\n')
+     f.write(arr)
+     f.close()
 
+with open('input.txt', 'rb') as f:
+     sorting_data = f.read()
+     c.sendall(sorting_data)
 # Receive the sorted array txt from the central server
+
 l = c.recv(1024)
 with open('output.txt', 'wb') as f:
     while l:

@@ -64,8 +64,8 @@ def send_to_sorting_server(sorting_type, array):
 # Start the server and listen for incoming connections
 while True:
     connection, client_address = s.accept()
-    #handle_connection(connection)
-    thread = threading._start_new_thread(handle_connection, (connection,))
+    print(client_address)
+    thread = threading._start_new_thread(handle_connection,(connection,))
 
 # Close the server socket
 s.close()
