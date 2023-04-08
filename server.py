@@ -10,15 +10,17 @@ s.bind((host, port))
 s.listen()
 print(f'Server created and listening at {port}')
 
-def handle_connection(connection):
+def handle_connection(connection, addr):
     data = connection.recv(1024)
     sorting_type, array_str = data.decode('utf-8').split('\n')
     sorting_type = sorting_type.strip()
-    array_to_sort = list(map(int, array_str.split(',')))
+    array_to_sort = list(map(int, array_str.split(', ')))
     #print('Sorting type:', sorting_type)
     #print('Given array:', array_to_sort, 'Size:', len(array_to_sort))
+    print('Array received from client. Connecting to sorting server...')
     # Send the array to the appropriate sorting server
     sorted_array = send_to_sorting_server(sorting_type, array_to_sort)
+    print('Array sorted. Sending to client...')
     #print('Sorted array:', sorted_array)
     with open('server_processing.txt', 'wb') as f1:
         f1.write(sorted_array)
@@ -27,6 +29,7 @@ def handle_connection(connection):
         connection.send(l)
     f1.close()
     connection.close()
+    print('Connection closed to', addr)
 
 def send_to_sorting_server(sorting_type, array):
     s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -60,12 +63,11 @@ def send_to_sorting_server(sorting_type, array):
     # Close the connection to the sorting server
     s1.close()
 
-
 # Start the server and listen for incoming connections
 while True:
     connection, client_address = s.accept()
-    print(client_address)
-    thread = threading._start_new_thread(handle_connection,(connection,))
+    print('Client with address', client_address, 'connected')
+    thread = threading._start_new_thread(handle_connection, (connection, client_address))
 
 # Close the server socket
 s.close()
