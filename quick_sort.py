@@ -26,8 +26,7 @@ def quick_sort(array, low, high):
 
 def handle_connection(connection):
     data = connection.recv(1024)
-    array_str = ','.join(map(str, data)).encode('utf-8')
-    array = list(map(int, array_str.decode('utf-8').split(',')))
+    array = list(map(int, data.decode('utf-8').split(',')))
     print('Received array:', array)
     quick_sort(array, 0, len(array)-1)
     print('Sorted array:', array)
