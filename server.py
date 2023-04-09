@@ -14,14 +14,13 @@ def handle_connection(connection, addr):
     data = connection.recv(1024)
     sorting_type, array_str = data.decode('utf-8').split('\n')
     sorting_type = sorting_type.strip()
-    array_to_sort = list(map(int, array_str.split(', ')))
-    #print('Sorting type:', sorting_type)
-    #print('Given array:', array_to_sort, 'Size:', len(array_to_sort))
+    array_to_sort = list(map(int, array_str.split(',')))
+    print('Sorting type:', sorting_type)
+    print('Given array:', array_to_sort, 'Size:', len(array_to_sort))
     print('Array received from client. Connecting to sorting server...')
     # Send the array to the appropriate sorting server
     sorted_array = send_to_sorting_server(sorting_type, array_to_sort)
     print('Array sorted. Sending to client...')
-    #print('Sorted array:', sorted_array)
     with open('server_processing.txt', 'wb') as f1:
         f1.write(sorted_array)
     with open('server_processing.txt', 'rb') as f1:

@@ -3,8 +3,8 @@ c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 c.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 c.connect(('localhost', 8000))
 
-arr = input("Enter the array: ")
-sort_type = input("Enter the sorting type: ")
+arr = input("Enter the array(eg:1,2..): ")
+sort_type = input("Enter the sorting type(merge/bubble/selection/quick): ")
 
 with open('input.txt', 'w+') as f:
     f.write(sort_type)
@@ -26,7 +26,7 @@ with open('output.txt', 'wb') as f:
 
 with open('output.txt', 'r') as f:
     l = f.read()
-    arr = list(map(int, l.split(', ')))
+    arr = list(map(int, l.split(',')))
     print("The sorted array: ", arr)
 
 # Close the client socket
