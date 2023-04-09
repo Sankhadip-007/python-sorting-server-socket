@@ -17,11 +17,11 @@ The approach to the project is as follows:
     
 -   The central server (server.py) then reads the sorting type and the array that has been sent by the client and passes this array to a function `send_to_sorting_server(sorting_type, array_str).` Note that the array is still in string form.
     
--   The function send_to_sorting_server(sorting_type, array_str) then uses if-elif statements to select the appropriate sorting server among the 4 distributed servers. After selecting, it then sends the array (in string form) to the respective sorting server using a new socket connection.
+-   The function `send_to_sorting_server(sorting_type, array_str)` then uses `if-elif` statements to select the appropriate sorting server among the 4 distributed servers. After selecting, it then sends the array (in string form) to the respective sorting server using a new socket connection.
     
--   Every sorting server (bubble_sort.py, selection_sort.py, merge_sort.py and quick_sort.py) has a function `handle_connection(connection)` that receives the array in string form from central server and converts it into an array of integers using the list(map(int, data.split(‘,’))) function.
+-   Every sorting server (bubble_sort.py, selection_sort.py, merge_sort.py and quick_sort.py) has a function `handle_connection(connection)` that receives the array in string form from central server and converts it into an array of integers using the `list(map(int, data.split(‘,’)))` function.
     
--   Then sorting is performed on the integer array. The sorted array is converted into string form using ‘,’.join() function and sent back to the central server using the same socket connection.
+-   Then sorting is performed on the integer array. The sorted array is converted into string form using `‘,’.join()` function and sent back to the central server using the same socket connection.
     
 -   The central server then writes the sorted array into a temporary file named ‘server_processing.txt’. It then reads this file line by line and sends it back to the client program.
     
