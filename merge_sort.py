@@ -36,8 +36,7 @@ def merge_sort(arr):
 def handle_connection(connection):
     # Receive the data from the central server
     data = connection.recv(1024)
-    array_str = ','.join(map(str, data)).encode('utf-8')
-    array = list(map(int, array_str.decode('utf-8').split(',')))
+    array = list(map(int, data.decode('utf-8').split(',')))
     print('Received array:', array)
     # Sort the array using Merge Sort
     sorted_array = merge_sort(array)

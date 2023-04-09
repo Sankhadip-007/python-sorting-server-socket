@@ -14,12 +14,9 @@ def handle_connection(connection, addr):
     data = connection.recv(1024)
     sorting_type, array_str = data.decode('utf-8').split('\n')
     sorting_type = sorting_type.strip()
-    array_to_sort = list(map(int, array_str.split(',')))
-    print('Sorting type:', sorting_type)
-    print('Given array:', array_to_sort, 'Size:', len(array_to_sort))
     print('Array received from client. Connecting to sorting server...')
     # Send the array to the appropriate sorting server
-    sorted_array = send_to_sorting_server(sorting_type, array_to_sort)
+    sorted_array = send_to_sorting_server(sorting_type, array_str)
     print('Array sorted. Sending to client...')
     with open('server_processing.txt', 'wb') as f1:
         f1.write(sorted_array)
@@ -36,25 +33,25 @@ def send_to_sorting_server(sorting_type, array):
     if sorting_type == 'bubble':
         s1.connect(('localhost', 8001))
         print('Connected to bubble sort server')
-        s1.send(bytes(array))
+        s1.send(array.encode('utf-8'))
         sorted_array = s1.recv(1024)
         return sorted_array
     elif sorting_type == 'selection':
         s1.connect(('localhost', 8002))
         print('Connected to selection sort server')
-        s1.send(bytes(array))
+        s1.send(array.encode('utf-8'))
         sorted_array = s1.recv(1024)
         return sorted_array
     elif sorting_type == 'merge':
         s1.connect(('localhost', 8003))
         print('Connected to merge sort server')
-        s1.send(bytes(array))
+        s1.send(array.encode('utf-8'))
         sorted_array = s1.recv(1024)
         return sorted_array
     elif sorting_type == 'quick':
         s1.connect(('localhost', 8004))
         print('Connected to quick sort server')
-        s1.send(bytes(array))
+        s1.send(array.encode('utf-8'))
         sorted_array = s1.recv(1024)
         return sorted_array
     else:
@@ -68,5 +65,4 @@ while True:
     print('Client with address', client_address, 'connected')
     thread = threading._start_new_thread(handle_connection, (connection, client_address))
 
-# Close the server socket
 s.close()
